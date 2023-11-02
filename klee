@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,x,y;
+    cout<<"Enter number of points :";
+    cin>>n;
+    vector<pair<int,int>>m;
+    for(int i=1;i<=n;i++)
+    {
+        cout<<"x coordinate :";
+        cin>>x;
+        cout<<"y coordinate :";
+        cin>>y;
+        m.push_back({x,y});
+    }
+    vector<pair<int,bool>>point;
+    for(int i=0;i<m.size();i++)
+    {
+        point.push_back({m[i].first,false});
+        point.push_back({m[i].second,true});
+    }
+    sort(point.begin(),point.end());
+    int result=0;
+    int count=0;
+    for(int i=0;i<point.size()-1;i++)
+    {
+        if(point[i].second==false)
+        count++;
+        else if(point[i].second==true)
+        count--;
+        if(count>0)
+        {
+            result+=point[i+1].first-point[i].first;
+        }
+    }
+    cout<<"Total distance :"<<result<<endl;
+}
