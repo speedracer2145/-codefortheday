@@ -1,0 +1,20 @@
+c="abcdefghijklmnopqrstuvwxyz"
+def encrypt(a,k):
+    m=""
+    for i in range(len(a)):
+        m+=c[(c.index(a[i])+c.index(k[i]))%26]
+    return m
+def decrypt(a,k):
+    m=""
+    for i in range(len(a)):
+        m+=c[(c.index(a[i])-c.index(k[i]))%26]
+    return m
+a=input()
+k=input()
+while len(k)<=len(a):
+    k=k+k
+e=encrypt(a,k)
+print(e)
+d=decrypt(e,k)
+print(d)
+vignere cipher
