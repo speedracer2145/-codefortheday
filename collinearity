@@ -1,0 +1,49 @@
+def calculate_slope(x1, y1, x2, y2):
+    if x1 == x2:
+        return float('inf')
+    return (y2 - y1) / (x2 - x1)
+
+def calculate_area_of_triangle(x1, y1, x2, y2, x3, y3):
+    return abs(0.5 * ((x1 * (y2 - y3)) + (x2 * (y3 - y1)) + (x3 * (y1 - y2))))
+
+def calculate_distance(x1, y1, x2, y2):
+    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+def check_collinearity(points, option):
+    if option == 1:  # Using Slope Formula
+        slope1 = calculate_slope(points[0][0], points[0][1], points[1][0], points[1][1])
+        slope2 = calculate_slope(points[1][0], points[1][1], points[2][0], points[2][1])
+        slope3 = calculate_slope(points[0][0], points[0][1], points[2][0], points[2][1])
+        
+        if slope1 == slope2 == slope3:
+            print("Collinear Slope condition value = 0, Collinear = True")
+
+    elif option == 2:  # Using Area of Triangle Formula
+        area = calculate_area_of_triangle(points[0][0], points[0][1], points[1][0], points[1][1], points[2][0], points[2][1])
+        if area == 0:
+            print("Area of Triangle = 0, Collinear = True")
+        else:
+            print("Area of Triangle = ",area,", Collinear = False")
+
+    elif option == 3:  # Using Distance Formula
+        distances = [
+            calculate_distance(points[0][0], points[0][1], points[1][0], points[1][1]),
+            calculate_distance(points[1][0], points[1][1], points[2][0], points[2][1]),
+            calculate_distance(points[0][0], points[0][1], points[2][0], points[2][1])
+        ]
+        distances.sort()
+        if distances[0] + distances[1] == distances[2]:
+            small=round(distances[0],2)
+            print("Smallest distance = ",small,", Collinear = True")
+            
+
+# Get user input for option and points
+option = int(input())
+points = []
+
+for i in range(3):
+    point_input = input()
+    x, y = map(int, point_input.strip('()').split(','))
+    points.append((x, y))
+
+is_collinear = check_collinearity(points, option)
