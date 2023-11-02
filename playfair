@@ -1,0 +1,112 @@
+m = [['0' for _ in range(5)] for _ in range(5)]
+b="abcdefghiklmnopqrstuvwxyz"
+c=list(b)
+def removextra(a):
+    for i in b:
+        if i in a and i in c:
+            c.remove(i)
+    #print(c)
+def makematrix(a):
+    removextra(a)
+    for i in range(5):
+        for j in range(5):
+            if 5*i+j>=len(a):
+                #l=i
+                #w=j
+                break
+            m[i][j]=a[5*i+j]
+    #print(l,w)
+    for i in range(5):
+        for j in range(5):
+            if m[i][j]=='0' and 5*i+j-len(a)<len(c):
+                m[i][j]=c[5*i+j-len(a)]
+def encrypt(a,k):
+    w = []
+    for i in range(0,len(a),2):
+        if i<len(a)-1:
+            w.append([a[i],a[i+1]])
+        else:
+            if len(a)%2==0:
+                w.append([a[i],a[i+1]])
+            else:
+                w.append([a[i],'x'])
+    #print(w)
+    # Create the Playfair matrix from the key
+    makematrix(k)
+    encrypted_message = ""
+    for pair in w:
+        l,b = pair[0],pair[1]
+        ai, aj, bi, bj = None, None, None, None
+        for i in range(5):
+            for j in range(5):
+                if m[i][j] == l:
+                    ai, aj = i, j
+                elif m[i][j] == b:
+                    bi, bj = i, j
+
+        if ai is not None and bi is not None:
+            # Characters are in the same row
+            if ai == bi:
+                aj = (aj + 1) % 5
+                bj = (bj + 1) % 5
+            # Characters are in the same column
+            elif aj == bj:
+                ai = (ai + 1) % 5
+                bi = (bi + 1) % 5
+            # Characters form a rectangle
+            else:
+                aj, bj = bj, aj
+
+            encrypted_message += m[ai][aj] + m[bi][bj]
+    #else:
+    #encrypted_message += pair
+
+    return encrypted_message
+def decrypt(a,k):
+    w = []
+    for i in range(0,len(a),2):
+        if i<len(a)-1:
+            w.append([a[i],a[i+1]])
+        else:
+            if len(a)%2==0:
+                w.append([a[i],a[i+1]])
+            else:
+                w.append([a[i],'x'])
+    #print(w)
+    # Create the Playfair matrix from the key
+    makematrix(k)
+    encrypted_message = ""
+    for pair in w:
+        l,b = pair[0],pair[1]
+        ai, aj, bi, bj = None, None, None, None
+        for i in range(5):
+            for j in range(5):
+                if m[i][j] == l:
+                    ai, aj = i, j
+                elif m[i][j] == b:
+                    bi, bj = i, j
+
+        if ai is not None and bi is not None:
+            # Characters are in the same row
+            if ai == bi:
+                aj = (aj - 1) % 5
+                bj = (bj - 1) % 5
+            # Characters are in the same column
+            elif aj == bj:
+                ai = (ai - 1) % 5
+                bi = (bi - 1) % 5
+            # Characters form a rectangle
+            else:
+                aj, bj = bj, aj
+
+            encrypted_message += m[ai][aj] + m[bi][bj] 
+    return encrypted_message       
+
+a=input()
+k=input()
+#print(b)
+en=encrypt(a,k)
+de=decrypt(en,k)
+print(en)
+print(de)
+playfair cypher
