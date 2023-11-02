@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,k;
+    cout<<"Enter number of points :";
+    cin>>n;
+    cout<<"Enter the dimension :";
+    cin>>k;
+    vector<vector<int>>points(n,vector<int>(k));
+    cout<<"Enter points (all x coordinates of points first then all y coordinates):";
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<k;j++)
+        {
+            cin>>points[i][j];
+        }
+    }
+    for(int i=0;i<k;i++)
+    sort(points[i].begin(), points[i].end());
+    for (int i=0;i<k;++i)
+    cout<<points[i][(ceil((double)n/2)-1)]<<" ";
+}
