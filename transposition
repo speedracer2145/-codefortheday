@@ -1,0 +1,25 @@
+def encrypt_transposition(message, key):
+    message = message.replace(" ", "").upper()
+    num_columns = len(key)
+    num_rows = -(-len(message) // num_columns)
+    grid = [['' for _ in range(num_columns)] for _ in range(num_rows)]
+    index = 0
+    for row in range(num_rows):
+        for col in range(num_columns):
+            if index < len(message):
+                grid[row][col] = message[index]
+                index += 1
+    key_order = list(key)
+    key_order.sort() 
+    encrypted_message = ''
+    for col in key_order:
+        current_col = key.index(col)
+        for row in range(num_rows):
+            encrypted_message += grid[row][current_col]
+
+    return encrypted_message
+
+message = "This is a secret message"
+key = "GERMAN"
+encrypted_message = encrypt_transposition(message, key)
+print(encrypted_message)
