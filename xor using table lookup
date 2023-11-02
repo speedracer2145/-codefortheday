@@ -1,0 +1,21 @@
+# def compute_parity_xor(num):
+#   result = 0
+#   while num:
+#       result ^= num & 1
+#       num >>= 1
+#   return result
+# def compute_parity_table_lookup(num):
+#   parity_table = [0, 1, 1, 0] 
+#   return parity_table[num & 0b11]
+# def main():
+#   choice = int(input())
+#   if choice == 1 or choice == 2:
+#       num = int(input())
+#       if choice == 1:
+#           result = compute_parity_xor(num)
+#       elif choice == 2:
+#           result = compute_parity_table_lookup(num)
+#       print(bin(num)[2:])
+#       print(bin(num)[2:], "even" if result == 0 else "odd")
+# if __name__ == "__main__":
+#   main()
